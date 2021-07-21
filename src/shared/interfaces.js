@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.timeslot = exports.jobType = exports.seniority = exports.scheduleSchema = exports.roomSchema = exports.userSchema = void 0;
 var mongoose_1 = require("mongoose");
 var isStrLen = function (str, min, max) {
@@ -33,19 +33,19 @@ var userSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
         required: true,
-        validate: function (s) { return isStrLen(s, 1, 99); },
+        validate: function (s) { return isStrLen(s, 1, 99); }
     },
     lastName: {
         type: String,
         required: true,
-        validate: function (s) { return isStrLen(s, 1, 99); },
+        validate: function (s) { return isStrLen(s, 1, 99); }
     },
     email: {
         type: String,
         unique: true,
         required: true,
         match: /.+\@.+\..+/,
-        validate: function (s) { return isStrLen(s, 1, 99) && s.includes("@"); },
+        validate: function (s) { return isStrLen(s, 1, 99) && s.includes("@"); }
     },
     password: { type: String, required: false },
     hash: { type: String, required: false },
@@ -54,26 +54,26 @@ var userSchema = new mongoose_1.Schema({
     personalInfo: {
         type: String,
         required: false,
-        default: "Hi, I'm using Statista Booking!",
-        validate: function (s) { return isStrLen(s, 0, 999); },
+        "default": "Hi, I'm using Statista Booking!",
+        validate: function (s) { return isStrLen(s, 0, 999); }
     },
-    jobType: { type: String, enum: jobType, required: false },
-    seniority: { type: String, enum: seniority, required: false },
+    jobType: { type: String, "enum": jobType, required: false },
+    seniority: { type: String, "enum": seniority, required: false },
     bookingLimit: { type: mongoose_1.Schema.Types.Mixed, required: true },
-    booked: { type: Number, required: true, default: 0 },
+    booked: { type: Number, required: true, "default": 0 }
 });
 exports.userSchema = userSchema;
 var roomSchema = new mongoose_1.Schema({
     floor: { type: Number, required: true },
     title: { type: String, required: true, unique: true },
     description: { type: String, required: false },
-    workstations: { type: Number, required: true },
+    workstations: { type: Number, required: true }
 });
 exports.roomSchema = roomSchema;
 var scheduleSchema = new mongoose_1.Schema({
     date: { type: String, required: true },
     slot: { type: String, required: true },
     user: { type: String, required: false },
-    room: { type: String, required: true },
+    room: { type: String, required: true }
 });
 exports.scheduleSchema = scheduleSchema;

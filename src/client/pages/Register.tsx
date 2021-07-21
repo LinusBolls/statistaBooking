@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Input from "../components/input";
+import Input from "../components/Input";
 import { input } from "../../shared/validate";
 import { LinkButtonText } from "../components/CustomLinks";
 import axios from "axios";

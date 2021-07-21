@@ -1,0 +1,51 @@
+table.timetable {
+  width: 100%;
+}
+table.timetable {
+  display: table;
+  border-collapse: collapse;
+}
+.timetable__yearDisplay {
+  color: var(--accentDark);
+}
+.timetable__header--currentWeek {
+  background: var(--action0) !important;
+}
+.timetable__header p {
+  font-size: 62.5%;
+}
+.timetable__column {
+  width: clamp(3rem, calc((100% - 1rem) / 8), 6rem);
+  display: table-cell;
+  position: relative;
+}
+.timetable__column > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 100%;
+}
+.timetable__column--today th {
+  color: var(--action0) !important;
+}
+.timetable__todayButton--isCurrentWeek {
+  color: var(--accentDark) !important;
+}
+.bookingView {
+  left: -100%;
+}
+.timetable__timeslot {
+  color: var(--accentDark);
+  cursor: default;
+}
+.timetable__timeslot--bookable {
+  color: var(--textDark) !important;
+  cursor: pointer !important;
+}
+.timetable__timeslot--booked {
+  color: var(--action0) !important;
+}
+.timetable__timeslot--selected {
+  background: var(--accentDark);
+}

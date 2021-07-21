@@ -1,0 +1,139 @@
+button.button {
+  cursor: pointer;
+}
+.button {
+  --size: 3rem;
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background: none;
+  border: none;
+
+  font-size: calc(var(--size) / 3);
+  font-weight: 700;
+  font-stretch: 100%;
+  font-style: normal;
+  letter-spacing: 1px;
+  text-indent: 1.25px;
+  text-rendering: optimizeLegibility;
+  white-space: nowrap;
+
+  display: inline-flex;
+  flex-direction: row;
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+
+  transition-duration: 0.3s;
+}
+.button.round {
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.button.square {
+  border-radius: 4px;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.button.long {
+  border-radius: 4px;
+  height: var(--size);
+
+  max-width: 10rem;
+  padding: 0 3rem;
+}
+
+.button.cta0 {
+  background: var(--action0);
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px 0px;
+}
+button.button.cta0:hover {
+  filter: brightness(1.2);
+  box-shadow: rgba(0, 0, 0, 0.7) 0px 2px 5px 0px;
+}
+.button:disabled,
+.button[disabled] {
+  cursor: not-allowed;
+  background: gray;
+  color: var(--headerDark) !important;
+}
+.button.cta1 {
+  border: 2px solid white;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px 0px;
+}
+.button.alert {
+  border: 2px solid var(--alertRed);
+  color: var(--alertRed);
+}
+button.button.cta1:hover {
+  background: white;
+  color: var(--action1);
+  box-shadow: rgba(0, 0, 0, 0.7) 0px 2px 5px 0px;
+}
+.button.slot {
+  border: 2px dashed var(--accentDark);
+  color: var(--action1);
+}
+.button.slot > * {
+  transition: filter 0.3s;
+}
+button.button.slot:hover {
+  border-color: var(--bone);
+}
+button.button.slot:hover > * {
+  filter: brightness(2);
+}
+.button.gray {
+  background: var(--accentDark);
+  color: var(--bone);
+}
+button.button.gray:hover {
+  filter: brightness(0.8);
+}
+.button.invis {
+  color: var(--bone);
+}
+.button.invis.icon::after {
+  content: "";
+  border-radius: 50%;
+  width: calc(var(--size) * 0.7);
+  height: calc(var(--size) * 0.7);
+  position: absolute;
+  transition-duration: 0.3s;
+}
+button.button.invis.icon:hover::after {
+  background: var(--accentDark);
+}
+button.button.invis.text:hover {
+  color: var(--accentDark);
+}
+
+/*
+Spotify PW
+obachtMaster[0]
+*/
+
+select.customSelect {
+  background: none;
+  border: 1px solid var(--accentDark);
+  color: white;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 3px;
+}

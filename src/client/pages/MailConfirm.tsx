@@ -11,7 +11,7 @@ export default function MailConfirmPage() {
     isFirstLogin: true,
     userInfo: JSON.parse(decodeURIComponent(data[1])),
   };
-  //fireLoginEvent("Moin");
+  fireLoginEvent("Moin");
   /*
   useEffect(() => {
     const { token } = useParams() as any;

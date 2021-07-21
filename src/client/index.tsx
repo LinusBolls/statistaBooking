@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
-import "./components/app.css";
-import "./components/button.css";
-import "./components/panel.css";
-import "./components/textInput.css";
-import "./components/header.css";
-import "./components/flyoutMenu.css";
-import "./components/timetable.css";
+import App from "./pages/_App";
+import "./css/app.css";
+import "./css/button.css";
+import "./css/panel.css";
+import "./css/textInput.css";
+import "./css/header.css";
+import "./css/flyoutMenu.css";
+import "./css/timetable.css";
 
 import "core-js/es/map";
 import "core-js/es/set";

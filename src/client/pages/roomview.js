@@ -25,7 +25,7 @@ exports.__esModule = true;
 var react_1 = __importStar(require("react"));
 var axios_1 = __importDefault(require("axios"));
 var sharedProjectConfig_1 = require("../../shared/sharedProjectConfig");
-var input_1 = __importDefault(require("../components/input"));
+var Input_1 = __importDefault(require("../components/Input"));
 var react_router_dom_1 = require("react-router-dom");
 var CustomLinks_1 = require("../components/CustomLinks");
 function RoomView(_a) {
@@ -57,10 +57,10 @@ var mapRoom = function (_a) {
         react_1["default"].createElement("p", null, workstations + " desks")));
 };
 var CreateRoomPanel = function () { return (react_1["default"].createElement(react_1["default"].Fragment, null,
-    react_1["default"].createElement(input_1["default"], { label: "Title" }),
-    react_1["default"].createElement(input_1["default"], { label: "Floor" }),
-    react_1["default"].createElement(input_1["default"], { label: "Description" }),
-    react_1["default"].createElement(input_1["default"], { label: "Workstations" }),
+    react_1["default"].createElement(Input_1["default"], { label: "Title" }),
+    react_1["default"].createElement(Input_1["default"], { label: "Floor" }),
+    react_1["default"].createElement(Input_1["default"], { label: "Description" }),
+    react_1["default"].createElement(Input_1["default"], { label: "Workstations" }),
     react_1["default"].createElement("button", { className: "button long cta0 text", onClick: createRoom }, "Create"))); };
 var createRoom = function () {
     var title = document.getElementById("Title");

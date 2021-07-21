@@ -1,7 +1,15 @@
 {
   "files.exclude": {
-    "“**/*.js”: {“when”: “$(basename).ts”},": true,
-    "“**/**.js”: {“when”: “$(basename).tsx”},": true
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/**.js": { "when": "$(basename).tsx" },
+    "dist/bundle.**.js": true,
+    "node_modules": true,
+    ".babelrc": true,
+    "package-lock.json": true
   },
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "editor.acceptSuggestionOnEnter": "off"
 }

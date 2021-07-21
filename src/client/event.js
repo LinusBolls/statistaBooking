@@ -13,7 +13,6 @@ var fireLoginEvent = function (user) {
     window.dispatchEvent(new CustomEvent(Event.LOGIN, {
         detail: user
     }));
-    //rerouting
     window.location.replace(sharedProjectConfig_1.domain + "/" + (user == null ? "login" : ""));
 };
 exports.fireLoginEvent = fireLoginEvent;

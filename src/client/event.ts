@@ -18,7 +18,6 @@ const fireLoginEvent = (user: any) => {
       detail: user,
     })
   );
-  //rerouting
   window.location.replace(domain + "/" + (user == null ? "login" : ""));
 };
 const fireBookingViewEvent = (targetMoment: string | null) =>

@@ -72,15 +72,19 @@ exports.__esModule = true;
 var react_1 = __importStar(require("react"));
 var moment_1 = __importDefault(require("moment"));
 var react_router_dom_1 = require("react-router-dom");
-var CustomLinks_1 = require("../components/CustomLinks");
 var axios_1 = __importDefault(require("axios"));
 var sharedProjectConfig_1 = require("../../shared/sharedProjectConfig");
 var event_1 = require("../event");
-var weekStartAndEnd = function (date, formatOption) {
-    if (formatOption === void 0) { formatOption = "l"; }
-    return moment_1["default"](date, sharedProjectConfig_1.dateFormat).startOf("week").format(formatOption) + "\n   - \n   " + moment_1["default"](date, sharedProjectConfig_1.dateFormat).endOf("week").format(formatOption);
+var CustomLinks_1 = require("../components/CustomLinks");
+var TimeTableHeader_1 = __importDefault(require("../components/TimeTableHeader"));
+var BookingPanel_1 = __importDefault(require("../components/BookingPanel"));
+var redirect = function (mom) {
+    return window.location.replace(sharedProjectConfig_1.domain + "/timetable/" + mom.format(sharedProjectConfig_1.dateFormat));
 };
-var formatOptions = ["DD/MM"];
+var displayResponse = function (response) {
+    var output = document.getElementById("output");
+    output.innerHTML = JSON.stringify(response);
+};
 var fetchWeekData = function (date) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -91,7 +95,7 @@ var fetchWeekData = function (date) { return __awaiter(void 0, void 0, void 0, f
                         week: date
                     }
                 }, {})
-                    .then(function (res) { return res.data.data; })["catch"](function (e) { return alert(e); })];
+                    .then(function (res) { return res.data.data; })["catch"](displayResponse)];
             case 1: return [2 /*return*/, _a.sent()];
         }
     });
@@ -103,24 +107,20 @@ var fetchRooms = function () { return __awaiter(void 0, void 0, void 0, function
                     .post(sharedProjectConfig_1.domain + "/api/view/room", {
                     token: document.cookie.replace("token=", "")
                 }, {})
-                    .then(function (res) { return res.data.data; })["catch"](function (e) { return alert(e); })];
+                    .then(function (res) { return res.data.data; })["catch"](displayResponse)];
             case 1: return [2 /*return*/, _a.sent()];
         }
     });
 }); };
-var redirect = function (mom) {
-    return window.location.replace(sharedProjectConfig_1.domain + "/timetable/" + mom.format(sharedProjectConfig_1.dateFormat));
-};
 function TimeTable(_a) {
     var user = _a.user;
     var date = react_router_dom_1.useParams().date;
-    if (!moment_1["default"](date, sharedProjectConfig_1.dateFormat, true).isValid())
-        redirect(moment_1["default"]());
     var _b = react_1.useState(null), targetMoment = _b[0], setTargetMoment = _b[1];
     var _c = react_1.useState(null), weekData = _c[0], setWeekData = _c[1];
-    var _d = react_1.useState(0), formatOption = _d[0], setFormatOption = _d[1];
-    var _e = react_1.useState(null), rooms = _e[0], setRooms = _e[1];
+    var _d = react_1.useState(null), rooms = _d[0], setRooms = _d[1];
     react_1.useEffect(function () {
+        if (!moment_1["default"](date, sharedProjectConfig_1.dateFormat, true).isValid())
+            redirect(moment_1["default"]());
         fetchWeekData(date).then(function (res) { return setWeekData(res); });
         fetchRooms().then(function (res) { return setRooms(res); });
         window.addEventListener(event_1.Event.BOOKING_VIEW, function (e) {
@@ -141,19 +141,13 @@ function TimeTable(_a) {
     };
     var isCurrentWeek = moment_1["default"](date, sharedProjectConfig_1.dateFormat).startOf("week").format(sharedProjectConfig_1.dateFormat) ===
         moment_1["default"]().startOf("week").format(sharedProjectConfig_1.dateFormat);
-    var incrementFormatOption = function () {
-        setFormatOption(formatOption + 1);
-        if (formatOption > formatOptions.length - 2)
-            setFormatOption(0);
-    };
     return (react_1["default"].createElement("div", { className: "panel" },
-        react_1["default"].createElement("div", { className: "header panel__header timetable__header" +
-                (isCurrentWeek ? " timetable__header--currentWeek" : "") },
-            react_1["default"].createElement("button", { className: "button invis square icon", onClick: function () { return newWeek(-1); } }, "<"),
-            react_1["default"].createElement("p", { onClick: incrementFormatOption, style: { margin: "auto" } }, weekStartAndEnd(date, formatOptions[formatOption])),
-            react_1["default"].createElement("button", { className: "button invis long text" +
-                    (isCurrentWeek ? " timetable__todayButton--isCurrentWeek" : ""), onClick: function () { return newWeek(0); } }, "Today"),
-            react_1["default"].createElement("button", { className: "button invis square icon", onClick: function () { return newWeek(1); } }, ">")),
+        react_1["default"].createElement(TimeTableHeader_1["default"], __assign({}, {
+            isCurrentWeek: isCurrentWeek,
+            newWeek: newWeek,
+            date: date
+        })),
+        react_1["default"].createElement("p", { id: "output" }),
         react_1["default"].createElement("table", { className: "timetable" },
             react_1["default"].createElement("tbody", null, weekData ? (react_1["default"].createElement(react_1["default"].Fragment, null,
                 react_1["default"].createElement("tr", { className: "timetable__column" },
@@ -167,7 +161,12 @@ function TimeTable(_a) {
                     return columnMap(data, day, isCurrentWeek, date, targetMoment);
                 }))) : (react_1["default"].createElement("tr", null,
                 react_1["default"].createElement("th", null, "Fetching..."))))),
-        targetMoment ? (react_1["default"].createElement(BookingView, { targetMoment: targetMoment, user: user, rooms: rooms })) : ("")));
+        targetMoment ? (react_1["default"].createElement(BookingPanel_1["default"], __assign({}, {
+            targetMoment: targetMoment,
+            user: user,
+            rooms: rooms,
+            displayResponse: displayResponse
+        }))) : ("")));
 }
 exports["default"] = TimeTable;
 var columnMap = function (day, weekDay, isCurrentWeek, date, targetMoment) { return (react_1["default"].createElement("tr", { key: weekDay, className: "timetable__column" +
@@ -196,44 +195,4 @@ var timeslotMap = function (_a, date, weekDay, targetMoment) {
                 ? " timetable__timeslot--selected"
                 : "") +
             (data.isBookedByUser ? " timetable__timeslot--booked" : "") }, data.desks));
-};
-function BookingView(_a) {
-    var targetMoment = _a.targetMoment, user = _a.user, rooms = _a.rooms;
-    var isBookingLimitReached = user.bookingLimit === false ? false : user.booked >= user.bookingLimit;
-    function book() {
-        var Room = document.getElementById("Room");
-        axios_1["default"]
-            .post(sharedProjectConfig_1.domain + "/api/book/schedule", {
-            token: document.cookie.replace("token=", ""),
-            data: {
-                room: Room.value,
-                date: moment_1["default"](targetMoment).format(sharedProjectConfig_1.dateFormat),
-                slot: moment_1["default"](targetMoment).format("H:00")
-            }
-        }, {})
-            .then(function (res) {
-            return res.data.success
-                ? event_1.fireUserinfoUpdateEvent({
-                    bookingLimit: res.data.data.newBookingLimit,
-                    booked: res.data.data.booked
-                })
-                : alert("something went wrong");
-        })["catch"](function (e) { return alert(e); });
-    }
-    return (react_1["default"].createElement("div", null,
-        react_1["default"].createElement("div", { className: "header panel__midPageHeader" }, moment_1["default"](targetMoment).format("DD/MM") +
-            " " +
-            moment_1["default"](targetMoment).format("H:00") +
-            " - " +
-            moment_1["default"](targetMoment).add(3, "hours").format("H:00")),
-        react_1["default"].createElement(BookingLimitDisplay, { user: user }),
-        react_1["default"].createElement("select", { id: "Room", className: "customSelect", name: "Room" }, rooms.map(function (_a) {
-            var title = _a.title, floor = _a.floor, workstations = _a.workstations, description = _a.description;
-            return (react_1["default"].createElement("option", { value: title }, title + " - Floor " + floor));
-        })),
-        react_1["default"].createElement("button", __assign({ className: "button long cta0", onClick: isBookingLimitReached ? function () { } : book }, (isBookingLimitReached ? { disabled: true } : {})), "Book")));
-}
-var BookingLimitDisplay = function (user) {
-    return (react_1["default"].createElement("div", { className: "noselect" }, "Your Bookings: " + user.user.booked + " / ",
-        user.user.bookingLimit === false ? (react_1["default"].createElement("i", { className: "fas fa-infinity" })) : (user.user.bookingLimit)));
 };

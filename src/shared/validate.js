@@ -54,7 +54,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.input = exports.validateReqBody = exports.validate = void 0;
 var Validator = require("validatorjs");
 var interfaces = __importStar(require("./interfaces"));
@@ -85,7 +85,7 @@ var validateReqBody = function (query) {
                             .status(200)
                             .send({
                             success: false,
-                            reason: Object.values(JSON.parse(JSON.stringify(data.reason)).errors).map(function (e) { return e[0].replace("data.", ""); }),
+                            reason: Object.values(JSON.parse(JSON.stringify(data.reason)).errors).map(function (e) { return e[0].replace("data.", ""); })
                         });
                     return [2 /*return*/];
             }
@@ -102,21 +102,21 @@ var input = {
         password: ["string", "min:10"],
         description: ["string"],
         isAdmin: ["boolean"],
-        seniority: [{ in: Object.values(interfaces.seniority) }, "string"],
-        jobType: [{ in: Object.values(interfaces.jobType) }, "string"],
-        bookingLimit: [], //integer or false
+        seniority: [{ "in": Object.values(interfaces.seniority) }, "string"],
+        jobType: [{ "in": Object.values(interfaces.jobType) }, "string"],
+        bookingLimit: []
     },
     room: {
-        floor: [{ in: sharedProjectConfig_1.floors }],
+        floor: [{ "in": sharedProjectConfig_1.floors }],
         title: ["string"],
         description: ["string"],
-        workstations: ["integer"],
+        workstations: ["integer"]
     },
     schedule: {
         date: ["string"],
-        slot: [{ in: Object.values(interfaces.timeslot) }, "string"],
+        slot: [{ "in": Object.values(interfaces.timeslot) }, "string"],
         user: ["string"],
-        room: ["string"],
-    },
+        room: ["string"]
+    }
 };
 exports.input = input;

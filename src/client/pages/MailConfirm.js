@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var react_1 = __importDefault(require("react"));
 var react_router_dom_1 = require("react-router-dom");
+var event_1 = require("../event");
 var CustomLinks_1 = require("../components/CustomLinks");
 function MailConfirmPage() {
     var token = react_router_dom_1.useParams().token;
@@ -14,7 +15,7 @@ function MailConfirmPage() {
         isFirstLogin: true,
         userInfo: JSON.parse(decodeURIComponent(data[1]))
     };
-    //fireLoginEvent("Moin");
+    event_1.fireLoginEvent("Moin");
     /*
     useEffect(() => {
       const { token } = useParams() as any;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { domain, dateFormat } from "../../shared/sharedProjectConfig";
 import moment from "moment";
 import { IRoom } from "../../shared/interfaces";
-import Input from "../components/input";
+import Input from "../components/Input";
 import { Link } from "react-router-dom";
 import { LinkButtonText } from "../components/CustomLinks";
 

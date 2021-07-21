@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var react_1 = __importDefault(require("react"));
 var react_router_dom_1 = require("react-router-dom");
-var input_1 = __importDefault(require("../components/input"));
+var Input_1 = __importDefault(require("../components/Input"));
 var validate_1 = require("../../shared/validate");
 var CustomLinks_1 = require("../components/CustomLinks");
 var axios_1 = __importDefault(require("axios"));
@@ -40,8 +40,8 @@ function LoginPage(props) {
             "Log in",
             react_1["default"].createElement(react_router_dom_1.Link, { to: "/register", component: CustomLinks_1.LinkButtonText }, "Not a user yet?")),
         react_1["default"].createElement("p", { id: "output" }),
-        react_1["default"].createElement(input_1["default"], { label: "Email", inputType: validate_1.input.user.email }),
-        react_1["default"].createElement(input_1["default"], { label: "Password", inputType: validate_1.input.user.password }),
+        react_1["default"].createElement(Input_1["default"], { label: "Email", inputType: validate_1.input.user.email }),
+        react_1["default"].createElement(Input_1["default"], { label: "Password", inputType: validate_1.input.user.password }),
         react_1["default"].createElement("button", { className: "button panel__button long cta0", onClick: login },
             react_1["default"].createElement("i", { className: "fa fa-paper-plane", "aria-hidden": "true" }))));
 }

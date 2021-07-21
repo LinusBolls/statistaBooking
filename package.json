@@ -33,8 +33,7 @@
     "buildClient": "tsc src/client/index --jsx react --esmoduleinterop && webpack build && clear && node src/server/index",
     "buildServer": "tsc && clear && node src/server/index",
     "test": "mocha",
-    "eject": "react-scripts eject",
-    "commit": "&& git push -u origin master"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
