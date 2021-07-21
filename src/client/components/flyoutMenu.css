@@ -1,0 +1,84 @@
+.menuButton {
+  position: relative;
+  z-index: 999;
+}
+.menuButton span {
+  transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  position: absolute;
+  background: white;
+  height: 2px;
+  width: calc(var(--size) / 3);
+  left: calc(var(--size) / 3);
+}
+.menuButton :nth-child(1) {
+  top: calc(var(--size) / 3 + 1px);
+  transform-origin: center left;
+}
+.menuButton :nth-child(2) {
+  top: calc(50% - 1px);
+  left: auto;
+  margin: auto;
+}
+.menuButton :nth-child(3) {
+  bottom: calc(var(--size) / 3 + 1px);
+  transform-origin: center left;
+}
+.menuButton--open :nth-child(1) {
+  transform: rotate(45deg);
+  width: calc(var(--size) / 3 * 1.12);
+  left: calc(var(--size) / 3 + 2px);
+}
+.menuButton--open :nth-child(2) {
+  background: none;
+  transform: rotate(-45deg);
+}
+.menuButton--open :nth-child(3) {
+  transform: rotate(-45deg);
+  width: calc(var(--size) / 3 * 1.12);
+  left: calc(var(--size) / 3 + 2px);
+}
+.flyoutMenu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: space-between;
+
+  left: 0;
+  top: 0;
+  height: 50vh;
+  padding-top: 20vh;
+  padding-bottom: 30vh;
+  width: 0;
+  max-width: 20rem;
+  background: var(--insanelyDark);
+  transition: width 0.3s;
+}
+.flyoutMenu--open {
+  width: 90vw !important;
+  border-right: 1px solid var(--accentDark);
+}
+.flyoutMenu__shadow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.3s;
+}
+.flyoutMenu__shadow--open {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.flyoutMenu--closed * {
+  display: none;
+}
+.flyoutMenu .pageLink {
+  position: relative;
+  left: 3rem;
+}

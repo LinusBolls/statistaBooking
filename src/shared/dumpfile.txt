@@ -1,0 +1,125 @@
+cartagena-express
+ETA: 29.06. 01:00
+
+Steve Johnson (395)
++49 04792 75954 (Worpswede)
+
+Hapag-Lloyd Büro Generell
++49 40 30013705
+
+Hapag-Lloyd Büro Antwerpen
+anna Neumark (manager)
++32 26200905
+
+vesops@hlag.com
+
+customer service belgium@service.hlag.com
+office antwerp an.vermeersch@hlag.c
+
+const sanitize = require("mongo-sanitize");
+
+function ding(token, password) {
+
+  arguments.map(deepSanitize);
+}
+const deepSanitize = (value) => {
+
+  if (Array.isArray(value)) {
+    value.forEach(deepSanitize);
+  }
+  else if (Object.keys(value).length) {
+    Object.values(value).forEach(deepSanitize);
+  }
+  return sanitize(value);
+}
+adjacency list
+
+
+
+
+
+cleanser
+  face wash
+  remove dirt
+  "foaming"
+  "cerave"
+  "la roche-posay"
+treatment
+  more targeted
+  exfoliant
+  "clarifying serum"
+moisturizer
+  water cream
+
+wash face two times daily luke warm with cleanser
+
+
+3l water daily
+
+
+coconut oil 20 mins
+
+
+sebamed /4x8 deo
+
+seasalt spray
+
+jacket
+adidas hose
+rote badehose
+
+
+
+
+
+
+Techstack
+
+Typescript
+MongoDB
+  MongooseJS
+ExpressJS
+ReactJS
+  ReactRouterJS
+NodeJS
+
+Additional Dependencies
+
+AxiosJS
+NodemailerJS
+ValidatorJS
+MomentJS
+FontAwesome
+
+Toolchain
+
+npm
+tsc
+babel
+webpack
+eslint
+git
+mochaJS
+
+
+Todos
+
+dont book two at the same time
+time zone problem (!)
+
+update userinfo, roominfo
+delete user, room
+multiple at once
+reset booked weekly
+
+UX
+  Prevent submit when inputs not correct
+  output element in every form
+  axios.catch()!
+  views for nothing to see!
+  bind enums into inputs
+  life update desks
+
+view available workstations
+good mail confirm (do extra login request)!
+delete schedule!

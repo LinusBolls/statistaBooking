@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "“**/*.js”: {“when”: “$(basename).ts”},": true,
+    "“**/**.js”: {“when”: “$(basename).tsx”},": true
+  },
+  "editor.tabSize": 2
+}
