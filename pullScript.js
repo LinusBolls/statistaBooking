@@ -16,8 +16,8 @@ const machen = (
     proc.on("exit", _ => resolve(exitReturnValue));
   });
 (async function main(dieSache) {
-  const isUpToDate = await machen("git status -uno --porcelain", " ");
-  if (isUpToDate) return setTimeout(main, 60000, dieSache);
+  const isUpdateable = await machen("git status -uno --porcelain", " ");
+  if (!isUpdateable) return setTimeout(main, 60000, dieSache);
   console.log("Update detected, killing app");
   const startTime = Date.now();
   dieSache.kill("SIGINT");
