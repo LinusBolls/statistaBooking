@@ -2,14 +2,7 @@ module.exports = {
   mongoUrl: "mongodb://localhost:27017/",
   appPort: 80,
   isSelfRegistryAllowed: true,
-  mailAuth: {
-    host: "SMTP",
-    service: "Gmail",
-    auth: {
-      user: "emailAdressHere",
-      pass: "passwordHere",
-    },
-  },
+  mailAuth: require("./emailCredentials"),
   defaultAdmin: {
     email: "default.admin@statista.com",
     password: "awerawerawert",

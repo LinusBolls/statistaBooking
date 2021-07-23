@@ -1,5 +1,18 @@
 import React, { forwardRef } from "react";
+import { useHistory } from "react-router-dom";
 
+const Link = ({ to, children, className, ...rest }: any) => {
+  const history = useHistory();
+  return (
+    <a
+      onClick={() => history.push(to)}
+      className={"pageLink " + (className || "")}
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+};
 const newCustomLink = (defaultClassName: string) =>
   forwardRef((props: any, ref) => {
     const { navigate, className, ...rest } = props;
@@ -29,4 +42,4 @@ const LinkStatistaLogo = forwardRef((props: any, ref) => {
     </a>
   );
 });
-export { LinkButtonText, LinkButtonIcon, LinkStatistaLogo };
+export { LinkButtonText, LinkButtonIcon, LinkStatistaLogo, Link };

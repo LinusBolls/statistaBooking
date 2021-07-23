@@ -49,6 +49,7 @@ const input = {
     title: ["string"],
     description: ["string"],
     workstations: ["integer"],
+    userDateSlot: ["string"],
   },
   schedule: {
     date: ["string"],

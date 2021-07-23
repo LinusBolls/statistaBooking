@@ -4,7 +4,6 @@ const { hash, randomString } = require("../../jwt");
 const { sendMail } = require("../../mail");
 import * as interfaces from "../../../shared/interfaces";
 const { input } = validate;
-import { domain } from "../../../shared/sharedProjectConfig";
 
 let authToken;
 index.authToken.then(res => (authToken = res));
@@ -65,7 +64,11 @@ async function registerUser(
   } catch (e) {
     return { success: false, reason: "Error saving user: " + e };
   }
-  const confirmationLink = `${domain}/api/confirm/${mailConfirmToken.new({
+  const confirmationLink = `${
+    process.argv[2] === "prod"
+      ? "https://booking.der-hedonistische-bote.com"
+      : "http://192.168.178.78:80"
+  }/api/confirm/${authToken.new({
     email: user.email,
     hash: user.hash,
   })}`;

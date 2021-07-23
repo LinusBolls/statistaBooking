@@ -14,7 +14,7 @@ const loginQuery = {
   },
 };
 const validateMagicLink = async (req: any, res: any) => {
-  const tokenData = mailConfirmToken.auth(req.params.token) as any;
+  const tokenData = authToken.auth(req.params.token) as any;
   if (!tokenData) {
     res
       .type("html")

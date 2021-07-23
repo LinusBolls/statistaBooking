@@ -4,15 +4,15 @@ import {
   Switch,
   Route,
   Redirect,
+  useParams,
 } from "react-router-dom";
 
-import { Event, loginEvent } from "../event";
+import { Event, loginEvent, logout, fireLoginEvent } from "../event";
 import Header from "../components/AppHeader";
 
 import LoginPage from "./Login";
 import AccountPage from "./Account";
 import RegisterPage from "./Register";
-import MailConfirmPage from "./MailConfirm";
 import TimeTable from "./TimeTable";
 import RoomView from "./RoomView";
 import ScheduleView from "./ScheduleView";
@@ -22,29 +22,31 @@ export default function App() {
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
   const [user, setUser] = useState(initialUser);
+
   useEffect(() => {
-    window.addEventListener(Event.USERINFO_UPDATE, (e: any) =>
-      setUser({ ...user, ...JSON.parse(e.detail) })
-    );
-    window.addEventListener(
-      Event.LOGIN,
-      (e: any) => {
-        const data: loginEvent | null = e.detail;
-        const token = data ? data.token : "";
-        const userInfo = data ? data.userInfo : "";
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        document.cookie =
-          data == null
-            ? "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;"
-            : `token=${token};path=/;`;
-        setUser(userInfo);
-      },
-      false
-    );
+    window.addEventListener(Event.USERINFO_UPDATE, (e: any) => {
+      const newUser = {
+        ...JSON.parse(localStorage.getItem("userInfo")),
+        ...JSON.parse(e.detail),
+      };
+      setUser(newUser);
+      localStorage.setItem("userInfo", JSON.stringify(newUser));
+    });
+    window.addEventListener(Event.LOGIN, (e: any) => {
+      const data: loginEvent | null = JSON.parse(e.detail);
+      const userInfo = data ? data.userInfo : null;
+      data
+        ? localStorage.setItem("userInfo", JSON.stringify(userInfo))
+        : localStorage.removeItem("userInfo");
+      document.cookie = data
+        ? `token=${data.token};path=/;`
+        : "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
+      setUser(userInfo);
+    });
   }, []);
   return (
-    <Router>
-      <div id="app" className="App">
+    <div id="app" className="App">
+      <Router>
         <Header user={user} />
         <Switch>
           <Route exact path="/">
@@ -53,7 +55,7 @@ export default function App() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/confirm/:token">
-            <MailConfirmPage />
+            <MailConfirmPseudopage />
           </Route>
           <Route exact path="/account">
             <AccountPage user={user} />
@@ -70,8 +72,30 @@ export default function App() {
           <Route exact path="/rooms">
             <RoomView user={user} />
           </Route>
+          <Route exact path="/logout">
+            <LogoutPseudopage />
+            <Redirect to="/login" />
+          </Route>
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
+const LogoutPseudopage = () => {
+  logout();
+  return <div>Logging out...</div>;
+};
+const MailConfirmPseudopage = () => {
+  const { token } = useParams() as any;
+  const data = token.split("||");
+  setTimeout(
+    () =>
+      fireLoginEvent({
+        token: data[0],
+        isFirstLogin: true,
+        userInfo: JSON.parse(decodeURIComponent(data[1])),
+      }),
+    0
+  );
+  return <div>Confirming...</div>;
+};

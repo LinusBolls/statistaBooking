@@ -1,4 +1,4 @@
-button.button {
+.button {
   cursor: pointer;
 }
 .button {
@@ -31,6 +31,9 @@ button.button {
 
   transition-duration: 0.3s;
 }
+a.button {
+  display: flex;
+}
 .button.round {
   border-radius: 50%;
   width: var(--size);
@@ -62,7 +65,7 @@ button.button {
   color: white;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px 0px;
 }
-button.button.cta0:hover {
+.button.cta0:hover {
   filter: brightness(1.2);
   box-shadow: rgba(0, 0, 0, 0.7) 0px 2px 5px 0px;
 }
@@ -81,7 +84,7 @@ button.button.cta0:hover {
   border: 2px solid var(--alertRed);
   color: var(--alertRed);
 }
-button.button.cta1:hover {
+.button.cta1:hover {
   background: white;
   color: var(--action1);
   box-shadow: rgba(0, 0, 0, 0.7) 0px 2px 5px 0px;
@@ -93,17 +96,17 @@ button.button.cta1:hover {
 .button.slot > * {
   transition: filter 0.3s;
 }
-button.button.slot:hover {
+.button.slot:hover {
   border-color: var(--bone);
 }
-button.button.slot:hover > * {
+.button.slot:hover > * {
   filter: brightness(2);
 }
 .button.gray {
   background: var(--accentDark);
   color: var(--bone);
 }
-button.button.gray:hover {
+.button.gray:hover {
   filter: brightness(0.8);
 }
 .button.invis {
@@ -117,10 +120,10 @@ button.button.gray:hover {
   position: absolute;
   transition-duration: 0.3s;
 }
-button.button.invis.icon:hover::after {
+.button.invis.icon:hover::after {
   background: var(--accentDark);
 }
-button.button.invis.text:hover {
+.button.invis.text:hover {
   color: var(--accentDark);
 }
 

@@ -2,7 +2,7 @@
   "files.exclude": {
     "**/*.js": { "when": "$(basename).ts" },
     "**/**.js": { "when": "$(basename).tsx" },
-    "dist/bundle.**.js": true,
+    "dist/bundle.**.js": false,
     "node_modules": true,
     ".babelrc": true,
     "package-lock.json": true

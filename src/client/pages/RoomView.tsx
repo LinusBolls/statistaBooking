@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { domain, dateFormat } from "../../shared/sharedProjectConfig";
-import moment from "moment";
+import { floors } from "../../shared/sharedProjectConfig";
 import { IRoom } from "../../shared/interfaces";
 import Input from "../components/Input";
-import { Link } from "react-router-dom";
-import { LinkButtonText } from "../components/CustomLinks";
+import { Link } from "../components/CustomLinks";
 
 export default function RoomView({ user }: any) {
   if (!user)
     return (
       <div>
-        <Link to="/login" component={LinkButtonText}>
+        <Link to="/login" className="button long invis text">
           Log in
         </Link>
         to view available rooms
@@ -21,7 +19,7 @@ export default function RoomView({ user }: any) {
   useEffect(() => {
     axios
       .post(
-        domain + "/api/view/room",
+        "/api/view/room",
         {
           token: document.cookie.replace("token=", ""),
         },
@@ -50,30 +48,37 @@ const mapRoom = ({ title, floor, workstations, description }: IRoom) => {
 };
 const CreateRoomPanel = () => (
   <>
+    <p>
+      Floor:{" "}
+      <select id="Floor" className="customSelect">
+        {floors.map(floor => (
+          <option value={floor}>{floor}</option>
+        ))}
+      </select>
+    </p>
     <Input label="Title" />
-    <Input label="Floor" />
     <Input label="Description" />
-    <Input label="Workstations" />
+    <Input label="Workstations" type="number" />
     <button className="button long cta0 text" onClick={createRoom}>
       Create
     </button>
   </>
 );
 const createRoom = () => {
-  const title = document.getElementById("Title");
-  const floor = document.getElementById("Floor");
-  const description = document.getElementById("Description");
-  const workstations = document.getElementById("Workstations");
+  const title = document.getElementById("Title") as any;
+  const floor = document.getElementById("Floor") as any;
+  const description = document.getElementById("Description") as any;
+  const workstations = document.getElementById("Workstations") as any;
   axios
     .post(
-      domain + "/api/create/room",
+      "/api/create/room",
       {
         token: document.cookie.replace("token=", ""),
         data: {
-          floor: floor,
-          workstations: workstations,
-          description: description,
-          title: title,
+          floor: parseInt(floor.value),
+          workstations: parseInt(workstations.value),
+          description: description.value,
+          title: title.value,
         },
       },
       {}

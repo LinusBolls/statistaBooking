@@ -17,6 +17,7 @@
     "@types/react-router-dom": "^5.1.8",
     "babel-preset-es2015": "^6.24.1",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "mongoose": "^5.13.2",
     "nodemailer": "^6.6.2",
     "react": "^17.0.2",
@@ -32,6 +33,7 @@
     "build": "react-scripts build",
     "buildClient": "tsc src/client/index --jsx react --esmoduleinterop && webpack build && clear && node src/server/index",
     "buildServer": "tsc && clear && node src/server/index",
+    "buildProd": "tsc && tsc src/client/index --jsx react --esmoduleinterop && webpack build --mode production && clear && node src/server/index prod",
     "test": "mocha",
     "eject": "react-scripts eject"
   },

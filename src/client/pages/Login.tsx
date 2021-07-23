@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import Input from "../components/Input";
 import { input } from "../../shared/validate";
-import { LinkButtonText } from "../components/CustomLinks";
+import { Link } from "../components/CustomLinks";
 import axios from "axios";
-import { domain } from "../../shared/sharedProjectConfig";
 
 import { loginEvent, fireLoginEvent } from "../event";
 
@@ -15,7 +13,7 @@ export default function LoginPage(props: any) {
     const output: any = document.getElementById("output");
     axios
       .post(
-        domain + "/api/login",
+        "/api/login",
         {
           data: {
             email: emailField.value,
@@ -43,7 +41,7 @@ export default function LoginPage(props: any) {
     <div className="panel">
       <div className="header panel__header">
         Log in
-        <Link to="/register" component={LinkButtonText}>
+        <Link to="/register" className="button long invis text">
           Not a user yet?
         </Link>
         {/*

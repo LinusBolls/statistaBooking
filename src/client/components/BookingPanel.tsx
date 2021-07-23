@@ -1,25 +1,31 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
-import { dateFormat, domain } from "../../shared/sharedProjectConfig";
-import { fireUserinfoUpdateEvent } from "../event";
+import { dateFormat } from "../../shared/sharedProjectConfig";
+import { fireUserinfoUpdateEvent, fireBookingViewEvent } from "../event";
 
 export default function BookingPanel({
   targetMoment,
   user,
+  weekData,
   rooms,
   displayResponse,
 }: any) {
+  const targetSlot = moment(targetMoment);
+  const isBookedByMe = weekData
+    ? weekData[targetSlot.format("ddd")][targetSlot.format("H:00")]
+        .isBookedByUser
+    : false;
   const isBookingLimitReached =
     user.bookingLimit === false ? false : user.booked >= user.bookingLimit;
   return (
     <div>
       <div className="header panel__midPageHeader">
-        {moment(targetMoment).format("DD/MM") +
+        {targetSlot.format("DD/MM") +
           " " +
-          moment(targetMoment).format("H:00") +
+          targetSlot.format("H:00") +
           " - " +
-          moment(targetMoment).add(3, "hours").format("H:00")}
+          targetSlot.add(3, "hours").format("H:00")}
       </div>
       <BookingLimitDisplay user={user} />
       <select id="Room" className="customSelect" name="Room">
@@ -30,13 +36,20 @@ export default function BookingPanel({
       <button
         className="button long cta0"
         onClick={
-          isBookingLimitReached
+          isBookedByMe
+            ? () =>
+                unBook(
+                  targetMoment,
+                  displayResponse,
+                  user.email + targetSlot.format("DD.MM.YYYYH:00")
+                )
+            : isBookingLimitReached
             ? () => {}
             : () => book(targetMoment, displayResponse)
         }
-        {...(isBookingLimitReached ? { disabled: true } : {})}
+        {...(isBookingLimitReached && !isBookedByMe ? { disabled: true } : {})}
       >
-        Book
+        {isBookedByMe ? "Unbook" : "Book"}
       </button>
     </div>
   );
@@ -55,10 +68,9 @@ const BookingLimitDisplay = (user: any) => {
 };
 const book = (targetMoment, displayResponse) => {
   const Room = document.getElementById("Room") as any;
-  const output = document.getElementById("output") as any;
   axios
     .post(
-      domain + "/api/book/schedule",
+      "/api/book/schedule",
       {
         token: document.cookie.replace("token=", ""),
         data: {
@@ -77,5 +89,20 @@ const book = (targetMoment, displayResponse) => {
           })
         : displayResponse(res.data.reason)
     )
+    .catch(displayResponse);
+};
+const unBook = (targetMoment, displayResponse, userDateSlot) => {
+  axios
+    .post(
+      "/api/delete/schedule",
+      {
+        token: document.cookie.replace("token=", ""),
+        data: {
+          userDateSlot: userDateSlot,
+        },
+      },
+      {}
+    )
+    .then((res: any) => fireBookingViewEvent(targetMoment))
     .catch(displayResponse);
 };

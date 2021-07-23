@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { Link, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import {
-  domain,
   weekDays,
   dateFormat,
   maxAdvancedBookingDays,
 } from "../../shared/sharedProjectConfig";
 import { fireBookingViewEvent, Event } from "../event";
-import { LinkButtonText } from "../components/CustomLinks";
+import { Link } from "../components/CustomLinks";
 import TimeTableHeader from "../components/TimeTableHeader";
 import BookingPanel from "../components/BookingPanel";
 
 interface ITimeSlot {
   rooms: number;
   desks: number;
+  isBookedByUser: boolean;
 }
 interface IDay {
   "6:00": ITimeSlot;
@@ -33,9 +33,6 @@ interface IWeek {
   sat: IDay;
   sun: IDay;
 }
-const redirect = (mom: any) =>
-  window.location.replace(domain + "/timetable/" + mom.format(dateFormat));
-
 const displayResponse = (response: any) => {
   const output = document.getElementById("output") as any;
   output.innerHTML = JSON.stringify(response);
@@ -43,7 +40,7 @@ const displayResponse = (response: any) => {
 const fetchWeekData = async (date: string): Promise<IWeek | null> =>
   await axios
     .post(
-      domain + "/api/view/schedule",
+      "/api/view/schedule",
       {
         token: document.cookie.replace("token=", ""),
         data: {
@@ -58,7 +55,7 @@ const fetchWeekData = async (date: string): Promise<IWeek | null> =>
 const fetchRooms = async (): Promise<any> =>
   await axios
     .post(
-      domain + "/api/view/room",
+      "/api/view/room",
       {
         token: document.cookie.replace("token=", ""),
       },
@@ -70,25 +67,30 @@ const fetchRooms = async (): Promise<any> =>
 export default function TimeTable({ user }: any) {
   let { date } = useParams() as any;
 
+  const history = useHistory();
+  const redirect = (mom: any) =>
+    history.push("/timetable/" + mom.format(dateFormat));
+
+  if (!moment(date, dateFormat, true).isValid()) redirect(moment());
+
   const [targetMoment, setTargetMoment] = useState<String | null>(null);
   const [weekData, setWeekData] = useState<IWeek | null>(null);
   const [rooms, setRooms] = useState<any>(null);
 
   useEffect(() => {
-    if (!moment(date, dateFormat, true).isValid()) redirect(moment());
-    fetchWeekData(date).then(res => setWeekData(res));
     fetchRooms().then(res => setRooms(res));
+
     window.addEventListener(Event.BOOKING_VIEW, (e: any) =>
       setTargetMoment(e.detail)
     );
-    window.addEventListener(Event.USERINFO_UPDATE, (e: any) =>
-      fetchWeekData(date).then(res => setWeekData(res))
-    );
   }, []);
+  useEffect(() => {
+    fetchWeekData(date).then(res => setWeekData(res));
+  }, [history, date, user?.booked]);
   if (!user)
     return (
       <div>
-        <Link to="/login" component={LinkButtonText}>
+        <Link to="/login" className="button long invis text">
           Log in
         </Link>
         to view this weeks schedule
@@ -143,6 +145,7 @@ export default function TimeTable({ user }: any) {
           {...{
             targetMoment,
             user,
+            weekData,
             rooms,
             displayResponse,
           }}
@@ -164,7 +167,7 @@ const columnMap = (
     key={weekDay}
     className={
       "timetable__column" +
-      (isCurrentWeek && moment().subtract(1, "day").day() === weekDay
+      (isCurrentWeek && moment().day() === weekDay
         ? " timetable__column--today"
         : "")
     }

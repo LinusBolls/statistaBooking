@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import { domain, dateFormat } from "../../shared/sharedProjectConfig";
-import { Link } from "react-router-dom";
-import { LinkButtonText } from "../components/CustomLinks";
+import { dateFormat } from "../../shared/sharedProjectConfig";
+import { Link } from "../components/CustomLinks";
 
 export default function ScheduleView({ user }: any) {
   if (!user)
     return (
       <div>
-        <Link to="/login" component={LinkButtonText}>
-          Log in
-        </Link>
+        <Link to="/login">Log in</Link>
         to view your schedules
       </div>
     );
@@ -19,7 +16,7 @@ export default function ScheduleView({ user }: any) {
   useEffect(() => {
     axios
       .post(
-        domain + "/api/booked/schedules",
+        "/api/booked/schedules",
         {
           token: document.cookie.replace("token=", ""),
         },

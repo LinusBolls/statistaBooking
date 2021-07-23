@@ -45,6 +45,8 @@ const bookSchedule = async (req: any, res: any) => {
     return;
   }
   newSchedule.date = newDate.toISOString();
+  newSchedule.userDateSlot =
+    newSchedule.user + newSchedule.date + newSchedule.slot;
 
   const user = await index.User.findOneAndUpdate(
     {

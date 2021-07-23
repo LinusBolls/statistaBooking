@@ -13,6 +13,7 @@ index.authToken.then(res => (authToken = res));
 
 const deleteQuery = {
   token: [...input.user.token, "required"],
+  data: { userDateSlot: [...input.room.userDateSlot, "required"] },
 };
 
 const deleteSchedule = async (req: any, res: any) => {
@@ -25,5 +26,10 @@ const deleteSchedule = async (req: any, res: any) => {
     });
     return;
   }
-  const success = await index.Schedule.deleteOne({ user: tokenData.email });
+  const success = await index.Schedule.deleteOne({
+    userDateSlot: req.body.data.userDateSlot,
+    user: tokenData.email,
+  }).then(res => res.deletedCount > 0);
+  res.type("json").send({ success: success });
 };
+export { deleteQuery as query, deleteSchedule as handler };

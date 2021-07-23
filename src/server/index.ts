@@ -88,6 +88,7 @@ const viewRoom = require("./endpoints/room/view");
 const bookSchedule = require("./endpoints/schedule/book");
 const viewSchedule = require("./endpoints/schedule/view");
 const bookedSchedules = require("./endpoints/schedule/viewMySchedules");
+const deleteSchedule = require("./endpoints/schedule/delete");
 
 app.post("/api/register", validateReqBody(register.query), register.handler);
 app.post("/api/login", validateReqBody(login.query), login.handler);
@@ -112,6 +113,11 @@ app.post(
   "/api/booked/schedules",
   validateReqBody(bookedSchedules.query),
   bookedSchedules.handler
+);
+app.post(
+  "/api/delete/schedule",
+  validateReqBody(deleteSchedule.query),
+  deleteSchedule.handler
 );
 app.get("*", (req: any, res: any) => res.sendFile(staticDir + "/index.html"));
 

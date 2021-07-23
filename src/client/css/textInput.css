@@ -100,7 +100,7 @@ input.textInput {
   top: calc(50% - 0.6rem);
   left: 1rem;
   cursor: text;
-  color: var(--headerDark);
+  color: var(--textDark);
 }
 .inpat__input:focus + .inpat__label,
 .inpat__input:valid + .inpat__label {

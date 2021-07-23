@@ -47,19 +47,20 @@
   align-content: space-between;
   justify-content: space-between;
 
-  left: 0;
   top: 0;
   height: 50vh;
-  padding-top: 20vh;
-  padding-bottom: 30vh;
-  width: 0;
+  padding-top: calc(9rem + 10vh);
+  padding-bottom: calc(40vh - 9rem);
   max-width: 20rem;
   background: var(--insanelyDark);
-  transition: width 0.3s;
+  width: 90vw;
+  left: -90vw;
+  transition: left 0.3s;
+  transition-timing-function: ease-out;
 }
 .flyoutMenu--open {
-  width: 90vw !important;
   border-right: 1px solid var(--accentDark);
+  left: 0;
 }
 .flyoutMenu__shadow {
   position: absolute;
@@ -78,7 +79,12 @@
 .flyoutMenu--closed * {
   display: none;
 }
-.flyoutMenu .pageLink {
+.flyoutMenu .pageLink:not(.accountInfo .pageLink) {
   position: relative;
   left: 3rem;
+}
+.flyoutMenu .accountInfo {
+  top: calc(4.5rem - 1px);
+  position: absolute;
+  justify-content: center;
 }

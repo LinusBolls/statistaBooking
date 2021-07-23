@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { LinkButtonText } from "./CustomLinks";
+import React, { useEffect, useState } from "react";
+import { Link } from "./CustomLinks";
+import AccountInfo from "./AccountInfo";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
-export default function MenuButton() {
+export default function MenuButton({ user }: any) {
   const [open, setOpen] = useState(false);
+  const location = useParams();
+  useEffect(() => {
+    setOpen(false);
+  }, [location]);
   return (
     <>
       <button
@@ -30,25 +35,18 @@ export default function MenuButton() {
           "flyoutMenu" + (open ? " flyoutMenu--open" : " flyoutMenu--closed")
         }
       >
-        <Link to="/timetable" component={LinkButtonText}>
-          <p>
-            <i className="far fa-calendar-alt"></i> Timetable
-          </p>
+        <AccountInfo user={user} className="accountInfo panel__midPageHeader" />
+        <Link to="/timetable" className="button invis long text">
+          <i className="far fa-calendar-alt"></i> Timetable
         </Link>
-        <Link to="/schedules" component={LinkButtonText}>
-          <p>
-            <i className="fas fa-desktop"></i> Your Schedule
-          </p>
+        <Link to="/schedules" className="button invis long text">
+          <i className="fas fa-desktop"></i> Your Schedule
         </Link>
-        <Link to="/rooms" component={LinkButtonText}>
-          <p>
-            <i className="fas fa-desktop"></i> Rooms
-          </p>
+        <Link to="/rooms" className="button invis long text">
+          <i className="fas fa-desktop"></i> Rooms
         </Link>
-        <Link to="/users" component={LinkButtonText}>
-          <p>
-            <i className="fas fa-users"></i> Users
-          </p>
+        <Link to="/users" className="button invis long text">
+          <i className="fas fa-users"></i> Users
         </Link>
         <p className="copyrightNotice">
           © Linus Bolls {moment().format("YYYY")}

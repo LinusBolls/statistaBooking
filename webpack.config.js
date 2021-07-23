@@ -1,14 +1,12 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const port = process.env.PORT || 3000;
-
 module.exports = {
   mode: "development",
   entry: "./src/client/index.js",
   output: {
     filename: "bundle.[fullhash].js",
-    publicPath: "http://192.168.178.78:80/",
+    publicPath: "/",
   },
   devtool: "inline-source-map",
 
@@ -33,7 +31,7 @@ module.exports = {
   devServer: {
     contentBase: "./dist",
     host: "localhost",
-    port: port,
+    port: 3000,
     historyApiFallback: true,
     open: true,
   },

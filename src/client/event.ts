@@ -1,5 +1,4 @@
 import { IUser } from "../shared/interfaces";
-import { domain } from "../shared/sharedProjectConfig";
 
 const Event = {
   LOGIN: "login",
@@ -15,10 +14,9 @@ interface loginEvent {
 const fireLoginEvent = (user: any) => {
   window.dispatchEvent(
     new CustomEvent(Event.LOGIN, {
-      detail: user,
+      detail: JSON.stringify(user),
     })
   );
-  window.location.replace(domain + "/" + (user == null ? "login" : ""));
 };
 const fireBookingViewEvent = (targetMoment: string | null) =>
   window.dispatchEvent(

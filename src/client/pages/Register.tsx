@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link } from "../components/CustomLinks";
 import Input from "../components/Input";
 import { input } from "../../shared/validate";
-import { LinkButtonText } from "../components/CustomLinks";
 import axios from "axios";
-import { domain } from "../../shared/sharedProjectConfig";
 
 export default function RegisterPage() {
   const register = () => {
@@ -15,7 +13,7 @@ export default function RegisterPage() {
     const output: any = document.getElementById("output");
     axios
       .post(
-        domain + "/api/register",
+        "/api/register",
         {
           data: {
             email: emailField.value,
@@ -47,7 +45,7 @@ export default function RegisterPage() {
     <div className="panel">
       <div className="header panel__header">
         Register
-        <Link to="/login" component={LinkButtonText}>
+        <Link to="/login" className="button long invis text">
           Already a user?
         </Link>
       </div>

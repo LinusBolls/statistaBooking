@@ -92,12 +92,14 @@ interface ISchedule extends Document {
   slot: string;
   user: string;
   room: string;
+  userDateSlot: string;
 }
 const scheduleSchema = new Schema({
   date: { type: String, required: true },
   slot: { type: String, required: true },
   user: { type: String, required: false },
   room: { type: String, required: true },
+  userDateSlot: { type: String, required: true, unique: true },
 });
 export {
   IServerResponse,
