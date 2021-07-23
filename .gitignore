@@ -22,7 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-dist/index.html
-src/shared/dumpfile.txt
 src/**/*.js
+dumpfile.txt
+dist/index.html
 emailCredentials.js
