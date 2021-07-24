@@ -22,7 +22,15 @@ const machen = (
   const startTime = Date.now();
   dieSache.kill("SIGINT");
   await machen("git pull");
+  console.log("Building app...");
   dieSache = await machen("npm run-script buildProd", "[Server][Express]");
   console.log(`App online again after ${(Date.now() - startTime) / 1000}s`);
   setTimeout(main, 60000, dieSache);
-})(exec("npm run-script buildProd"));
+})(
+  exec("npm run-script buildProd", (err, stdout, stderr) => {
+    console.log("Building app...");
+    if (err) throw err;
+    if (stderr) console.error(stderr);
+    console.log(stdout);
+  })
+);

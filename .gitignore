@@ -22,7 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+.vscode
+dist/*.js
+dist/*.LICENSE.txt
+dist/index.html
 src/**/*.js
 dumpfile.txt
-dist/index.html
 emailCredentials.js
