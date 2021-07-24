@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "buildClient": "tsc src/client/index --jsx react --esmoduleinterop && webpack build && clear && node src/server/index",
     "buildServer": "tsc && clear && node src/server/index",
-    "buildProd": "tsc && tsc src/client/index --jsx react --esmoduleinterop && webpack build --mode production && clear && node src/server/index prod",
+    "buildProd": "tsc && tsc src/client/index --jsx react --esmoduleinterop && webpack build && clear && node src/server/index prod",
     "test": "mocha",
     "eject": "react-scripts eject"
   },
