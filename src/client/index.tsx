@@ -9,9 +9,11 @@ import "./css/header.css";
 import "./css/flyoutMenu.css";
 import "./css/timetable.css";
 
+/*
 import "core-js/es/map";
 import "core-js/es/set";
 import "raf/polyfill";
+*/
 
 ReactDOM.render(
   <React.StrictMode>

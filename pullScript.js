@@ -15,7 +15,7 @@ const machen = (
     });
     proc.on("exit", _ => resolve(exitReturnValue));
   });
-(async function main(dieSache) {
+async function main(dieSache) {
   const isUpdateable = await machen("git status -uno --porcelain", " ");
   if (!isUpdateable) return setTimeout(main, 60000, dieSache);
   console.log("Update detected, killing app");
@@ -26,11 +26,32 @@ const machen = (
   dieSache = await machen("npm run-script buildProd", "[Server][Express]");
   console.log(`App online again after ${(Date.now() - startTime) / 1000}s`);
   setTimeout(main, 60000, dieSache);
-})(
-  exec("npm run-script buildProd", (err, stdout, stderr) => {
-    console.log("Building app...");
-    if (err) throw err;
-    if (stderr) console.error(stderr);
-    console.log(stdout);
-  })
-);
+}
+/*
+const ding = exec("npm run-script buildProd", (err, stdout, stderr) => {
+  console.log("moin");
+  if (err) throw err;
+  if (stderr) console.error(stderr);
+  console.log(stdout);
+  if (stdout.includes("[Server][Express]")) main(ding);
+});
+*/
+const machen = (
+  cmd,
+  successStr = false,
+  failStr = false,
+  exitReturnValue = false
+) =>
+  new Promise((resolve, _) => {
+    const args = cmd.split(" ");
+    const proc = spawn(args.shift(), args);
+    proc.stdout.on("data", data => {
+      console.log("stdout: " + data.toString());
+      if (successStr && stdout.includes(successStr)) resolve(proc);
+      else if (failStr && stdout.includes(failStr)) resolve(false);
+    });
+    proc.stderr.on("data", data => {
+      console.log("stderr: " + data.toString());
+    });
+    proc.on("exit", _ => resolve(exitReturnValue));
+  });
